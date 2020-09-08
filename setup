@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "deb https://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
+wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install zsh git byobu make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
+xz-utils libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev apt-transport-https bpytop -y
+
+curl https://pyenv.run | bash
+echo -e '\nexport PATH="/home/pi/.pyenv/bin:$PATH"\neval "$(pyenv init -)"\neval "$(pyenv virtualenv-init -)"' >> .bashrc .zshrc
+exec bash
+pyenv install -v 3.8.5
+pyenv global 3.8.5
